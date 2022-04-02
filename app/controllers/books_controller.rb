@@ -4,10 +4,10 @@ class BooksController < ApplicationController
   end
 
   def new
-   @book =Book.new
+   @book = Book.new
   end
 
-   def create
+  def create
     #  データを受け取り新規登録
     list = Book.new(book_params)
     #  データをデータベースに保存
@@ -17,9 +17,13 @@ class BooksController < ApplicationController
   end
 
   def index
+    @books = Book.all
+    @book = Book.new
+  
   end
 
   def show
+    @book = Book.find(params[:id])
   end
 
   def edit

@@ -1,63 +1,36 @@
-
-
-
-
-
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Bookers</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
-  </head>
-
-  <body>
     <header>
       <h4>Books</h4>
     </header>
-    
+
     <table>
       <thead>
         <tr>
           <th>title</th>
           <th>body</th>
-          <th colspan="3"></th></th>
+          <th colspan="3"></th>
         </tr>
-      </thead>  
-    </table>
-    
+      </thead>
+
     <tbody>
-      <% @books.each do |book| %>
+         <% @books.each do |book| %>
       <tr>
         <td><%= book.title %></td>
         <td><%= book.body %></td>
-        <td><%= link_to 'show', book %></td>
-        <td><%= link_to 'edit', book %></td>
-        <td><%= link_to 'destroy', book, method: :delete, "data-confirm" => 本当に削除しますか？ %></td>
+        <td><%= link_to 'show', book_path(book.id) %></td>
+        <td><%= link_to 'edit', edit_book_path(book.id) %></td>
+        <td><%= link_to 'destroy', book_path(book.id), method: :delete, "data-confirm" => "本当に削除しますか？" %></td>
+      <% end %>
       </tr>
     </tbody>
-    
-    
-    
-    
-    
+   </table>
 
-<div class="new-book">
-<h1>New Book</h1>
-<%= form_with model: Book.new do |f| %>
+<h2>New Book</h2>
+<%= form_with model: @book do |f| %>
   <h4>title</h4>
   <%= f.text_field :title %>
 
   <h4>body</h4>
   <%= f.text_area :body %>
 
-  <%= f.submit 'Create Book' %>
+  <div class="actions"><%= f.submit 'Create Book' %></div>
 <% end %>
-</div>
-
-
-</body>
-</html>
