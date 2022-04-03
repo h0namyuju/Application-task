@@ -9,17 +9,22 @@ class BooksController < ApplicationController
 
   def create
     #  データを受け取り新規登録
-    list = Book.new(book_params)
+    @book = Book.new(book_params)
     #  データをデータベースに保存
-    list.save
+    if @book.save
+       flash[:success] = "Book was successfully created."
     #  リダイレクト
-    redirect_to '/index'
+    redirect_to book_path(@book.id)
+    else
+      @books = Book.all
+      render :index
+    end
   end
+
 
   def index
     @books = Book.all
     @book = Book.new
-  
   end
 
   def show
@@ -27,8 +32,22 @@ class BooksController < ApplicationController
   end
 
   def edit
+    @book = Book.find(params[:id])
   end
 
+  def update
+    book = Book.find(params[:id])
+    book.update(book_params)
+    redirect_to book_path(book.id)
+  end
+
+  def destroy
+    book = Book.find(params[:id])
+    book.destroy
+    flash[:success] = "Book was successfully destroyed."
+    redirect_to '/books'
+
+  end
    # ストロングパラメータ
   def book_params
     params.require(:book).permit(:title, :body)
